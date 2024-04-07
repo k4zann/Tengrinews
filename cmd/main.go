@@ -1,12 +1,9 @@
 package main
 
 import (
-	"log"
 	"net/http"
-	"tengrinews/internal/domain"
+
 	"tengrinews/internal/handler"
-	"tengrinews/internal/models"
-	"tengrinews/internal/usecase"
 
 	"github.com/gorilla/mux"
 )
@@ -14,28 +11,12 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	articleRepo := &domain.MockArticleRepository{
-		Articles: []models.Article{
-			{ID: 1, Title: "Breaking News 1", Content: "This is the content of Breaking News 1."},
-			{ID: 2, Title: "Important Update", Content: "An important update is here."},
-		},
-	}
+	r.HandleFunc("/", handler.IndexHandler)
 
-	articleUsecase := usecase.NewArticleUsecase(articleRepo)
-	handlers := &handler.Handlers{ArticleUsecase: articleUsecase}
+	fs := http.FileServer(http.Dir("ui/assets/"))
+	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", fs))
 
-	r.HandleFunc("/", handlers.IndexHandler)
-	r.HandleFunc("/article/", handlers.ArticleHandler)
-	fs := http.FileServer(http.Dir("ui/static/"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.Handle("/", r)
 
-	server := &http.Server{
-		Addr:    ":8080",
-		Handler: r,
-	}
-
-	err := server.ListenAndServe()
-	if err != nil {
-		log.Fatal(err)
-	}
+	http.ListenAndServe(":8080", nil)
 }

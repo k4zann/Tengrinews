@@ -26,3 +26,4 @@ func (r *MockArticleRepository) GetByID(id int) (*models.Article, error) {
 	}
 	return nil, fmt.Errorf("article not found")
 }
+

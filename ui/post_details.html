@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{.Title}}</title>
+    <title>Magazine News</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -47,14 +47,13 @@
                                 <div class="header-info-mid">
                                     <!-- logo -->
                                     <div class="logo">
-                                        <a href="#"><img src="assets/img/logo/logo.png" alt=""></a>
+                                        <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="header-info-right d-flex align-items-center">
-                                   <!-- Social -->
                                    <div class="header-social">
                                         <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
                                         <a href="#"><i class="fab fa-pinterest-p"></i></a>
                                     </div>
                                 </div>
@@ -77,10 +76,17 @@
                                 <!-- Main-menu -->
                                 <div class="main-menu text-center d-none d-lg-block">
                                     <nav>                                                
-                                        <ul id="navigation">
-                                            {{range .Categories}}
-                                                <li><a href="/category/{{.}}">{{.}}</a></li>
-                                            {{end}}
+                                        <ul id="navigation">                                                                                                                                     
+                                            <li><a href="category.html">Lifestyle</a></li>
+                                            <li><a href="category.html">Business</a></li>
+                                            <li><a href="category.html">Fashion</a></li>
+                                            <li><a href="category.html">Design</a></li>
+                                            <li><a href="category.html">Health</a></li>
+                                            <li><a href="category.html">Harmful</a></li>
+                                            <li><a href="category.html">Technology</a></li>
+                                            <li><a href="category.html">Travel</a></li>
+                                            <li><a href="category.html">Food</a></li>
+                                            <li><a href="category.html">Creative</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -97,50 +103,73 @@
         <!-- Header End -->
     </header>
     <main>
-        <!-- Latest Posts Area -->
-        <div class="latest-posts pt-80 pb-80">
+        <!-- breadcrumb Start-->
+        <div class="page-notification">
             <div class="container">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="section-tittle mb-35">
-                            <h2>Latest Posts</h2>
-                        </div>
+                    <div class="col-lg-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Category</a></li> 
+                                <li class="breadcrumb-item"><a href="#">Post details</a></li> 
+                            </ol>
+                        </nav>
                     </div>
-                </div>
-                <div class="row">
-                    {{range .LatestPosts}}
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-baner-nw2 mb-30">
-                            <div class="banner-img-cap2">
-                                <div class="banner-img">
-                                    <img src="{{.ImageURL}}" alt="{{.Title}}">
-                                </div>
-                                <div class="banner-cap2">
-                                    <p>{{.Category}}</p>
-                                    <h3><a href="{{.Link}}">{{.Title}}</a></h3>
-                                    <p class="blog-text" style="text-transform: normal !important;">{{.Description}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{end}}
                 </div>
             </div>
         </div>
-        <!-- Latest Posts End-->
+        <!-- breadcrumb End -->
+        <!-- Post Details Stat -->
+        <div class="psot-details pb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="details-img mb-40">
+                            <img class="img-fluid" src="assets/img/gallery/post_details.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="about-details-cap">
+                        <h2>Calling time on irresponsible junk  food advertising to children</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="about-details-cap">
+                        <p class="mb-30">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
 
+                        <p class="mb-30">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
+
+                        <p class="mb-50">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="about-details-cap">
+                            <h3>Calling time on irresponsible junk  food advertising to children</h3>
+                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
+                            <div class="details-img">
+                                <img class="img-fluid mb-15" src="assets/img/gallery/post_details2.png" alt="">
+                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Post Details End -->
     </main>
-    
     <footer>
         <!-- Footer Start-->
         <div class="footer-area footer-padding">
             <div class="header-area">
                 <div class="main-header ">
-                    <div class="header-top d-lg-block d-none">
+                    <div class="header-top d-none d-lg-block">
                        <div class="container">
                            <div class="col-xl-12">
                                 <div class="row d-flex justify-content-between align-items-center">
-                                    <div class="header-info-left d-flex justify-content-center">
+                                    <div class="header-info-left d-flex">
                                         <!-- Social -->
                                         <div class="header-social">
                                             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -169,6 +198,15 @@
                                         <nav>                                                
                                             <ul>                                                                                                                                     
                                                 <li><a href="category.html">Lifestyle</a></li>
+                                                <li><a href="category.html">Business</a></li>
+                                                <li><a href="category.html">Fashion</a></li>
+                                                <li><a href="category.html">Design</a></li>
+                                                <li><a href="category.html">Health</a></li>
+                                                <li><a href="category.html">Harmful</a></li>
+                                                <li><a href="category.html">Technology</a></li>
+                                                <li><a href="category.html">Travel</a></li>
+                                                <li><a href="category.html">Food</a></li>
+                                                <li><a href="category.html">Creative</a></li>
                                             </ul>
                                         </nav>
                                     </div>
@@ -187,7 +225,7 @@
                         <div class="col-xl-9 col-lg-8">
                             <div class="footer-copy-right text-center">
                                 <p>
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This site was my by Arshat Aitkozha</a>
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This site was made by Arshat Aitkozha</a>
   </p>
                             </div>
                         </div>
@@ -197,7 +235,6 @@
         </div>
         <!-- Footer End-->
     </footer>
-
     <!-- Scroll Up -->
     <div id="back-top" >
         <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
