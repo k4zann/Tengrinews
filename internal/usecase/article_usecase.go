@@ -1,3 +1,4 @@
+// usecase/article_usecase.go
 package usecase
 
 import (
@@ -15,20 +16,18 @@ func NewArticleUsecase(repo domain.ArticleRepository) *ArticleUsecase {
 	}
 }
 
-func (uc *ArticleUsecase) GetAllArticles() ([]models.Article, error) {
-	return uc.ArticleRepo.GetAll()
+func (uc *ArticleUsecase) GetAllArticles(result *models.Result) ([]models.Article, error) {
+	return uc.ArticleRepo.GetAll(result)
 }
 
-func (uc *ArticleUsecase) GetArticleByID(id int) (*models.Article, error) {
-	return uc.ArticleRepo.GetByID(id)
+func (uc *ArticleUsecase) GetArticleByID(result *models.Result, id string) (*models.Article, error) {
+	return uc.ArticleRepo.GetByID(result, id)
 }
 
-func (uc *ArticleUsecase) GetArticlesByCategory(category string) (*models.Article, error) {
-	// TODO: Need to implement this method
-	return uc.ArticleRepo.GetByCategory(category)
+func (uc *ArticleUsecase) GetArticlesByCategory(result *models.Result, category string) ([]models.Article, error) {
+	return uc.ArticleRepo.GetByCategory(result, category)
 }
 
-func (uc *ArticleUsecase) GetArticlesBySearch(search string) (*models.Article, error) {
-	//TODO need to implement this method
-	return uc.ArticleRepo.GetBySearch(search)
+func (uc *ArticleUsecase) GetArticlesBySearch(result *models.Result, search string) ([]models.Article, error) {
+	return uc.ArticleRepo.GetBySearch(result, search)
 }
