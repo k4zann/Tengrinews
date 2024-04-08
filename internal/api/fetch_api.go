@@ -18,3 +18,39 @@ func FetchData(result *models.Result) {
 	}
 
 }
+
+func FetchDataByID(result *models.Result) {
+	file, err := os.Open("sample.json")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	err = json.NewDecoder(file).Decode(&result)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func FetchDataByCategory(result *models.Result) {
+	file, err := os.Open("sample.json")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	err = json.NewDecoder(file).Decode(&result)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func FetchDataBySearch(result *models.Result) {
+	file, err := os.Open("sample.json")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	err = json.NewDecoder(file).Decode(&result)
+	if err != nil {
+		panic(err)
+	}
+}

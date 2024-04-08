@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Magazine News</title>
+    <title>Tengrinews</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -26,18 +26,6 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <!-- ? Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/loder.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Preloader Start -->
     <header>
         <!-- Header Start -->
        <div class="header-area">
@@ -59,19 +47,14 @@
                                 <div class="header-info-mid">
                                     <!-- logo -->
                                     <div class="logo">
-                                        <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                        <a href="/"><img src="assets/img/logo/logo.png" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="header-info-right d-flex align-items-center">
-                                   <ul>                                          
-                                       <li><a href="about.html">About</a></li>
-                                       <li><a href="contact.html">Contact</a></li>
-                                       <li><a href="login.html">Log In  or  Sign Up</a></li>
-                                   </ul>
                                    <!-- Social -->
                                    <div class="header-social">
                                         <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
                                         <a href="#"><i class="fab fa-pinterest-p"></i></a>
                                     </div>
                                 </div>
@@ -93,18 +76,11 @@
                                 </div>
                                 <!-- Main-menu -->
                                 <div class="main-menu text-center d-none d-lg-block">
-                                    <nav>                                                
-                                        <ul id="navigation">                                                                                                                                     
-                                            <li><a href="category.html">Lifestyle</a></li>
-                                            <li><a href="category.html">Business</a></li>
-                                            <li><a href="category.html">Fashion</a></li>
-                                            <li><a href="category.html">Design</a></li>
-                                            <li><a href="category.html">Health</a></li>
-                                            <li><a href="category.html">Harmful</a></li>
-                                            <li><a href="category.html">Technology</a></li>
-                                            <li><a href="category.html">Travel</a></li>
-                                            <li><a href="category.html">Food</a></li>
-                                            <li><a href="category.html">Creative</a></li>
+                                    <nav>            
+                                        <ul id="navigation">    
+                                            {{range .Categories}}                                    
+                                                <li><a href="/category/{{.}}">{{.}}</a></li>
+                                            {{end}}
                                         </ul>
                                     </nav>
                                 </div>
@@ -128,8 +104,8 @@
                     <div class="col-lg-12">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Category</a></li> 
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">{{.Category}}</a></li> 
                             </ol>
                         </nav>
                     </div>
@@ -137,35 +113,37 @@
             </div>
         </div>
         <!-- breadcrumb End -->
-        <!-- Top Posts Start -->
-        <div class="top-post-area">
+        <!-- Latest Posts Area -->
+        <div class="latest-posts pt-80 pb-80">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="section-tittle mb-35">
-                            <h2>Top Posts</h2>
+                            <h2>Latest Posts</h2>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-lg-between">
-                    <div class="col-lg-8 col-md-8">
-                        <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="post_details.html"><img src="assets/img/gallery/top-psot1.png" alt=""></a>
+                <div class="row">
+                    {{range .Articles}}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-baner-nw2 mb-30">
+                            <div class="banner-img-cap2">
+                                <div class="banner-img">
+                                    <img src="{{.ImageURL}}" alt="{{.Title}}">
                                 </div>
-                                <div class="job-tittle">
-                                    <span>Trending</span>
-                                    <a href="post_details.html"><h4>The pomelo case: scope of plant variety rights in China</h4></a>
-                                    <p>We present things in a way that isn’t sensational, said Ms. Cham mavanijakul, 20, whose family has roots...</p>
+                                <div class="banner-cap2">
+                                    <p>{{.Category}}</p>
+                                    <h3><a href="{{.Link}}">{{.Title}}</a></h3>
+                                    <p class="blog-text" style="text-transform: normal !important;">{{.Description}}</p>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    {{end}}
                 </div>
             </div>
         </div>
-        <!-- Top Posts End -->
+        <!-- Latest Posts End-->
         <!--Pagination Start  -->
         <div class="pagination-area text-center">
             <div class="container">
@@ -202,7 +180,7 @@
                                         <!-- Social -->
                                         <div class="header-social">
                                             <a href="#"><i class="fab fa-twitter"></i></a>
-                                            <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                            <a href="#"><i class="fab fa-facebook-f"></i></a>
                                             <a href="#"><i class="fab fa-pinterest-p"></i></a>
                                         </div>
                                     </div>
@@ -213,10 +191,6 @@
                                         </div>
                                     </div>
                                     <div class="header-info-right d-flex align-items-center">
-                                       <ul>                                          
-                                           <li><a href="about.html">About</a></li>
-                                           <li><a href="contact.html">Contact</a></li>
-                                       </ul>
                                     </div>
                                 </div>
                            </div>
@@ -227,22 +201,6 @@
                             <div class="row align-items-center">
                                 <div class="col-12">
                                     <!-- Main-menu -->
-                                    <div class="main-menu text-center">
-                                        <nav>                                                
-                                            <ul>                                                                                                                                     
-                                                <li><a href="category.html">Lifestyle</a></li>
-                                                <li><a href="category.html">Business</a></li>
-                                                <li><a href="category.html">Fashion</a></li>
-                                                <li><a href="category.html">Design</a></li>
-                                                <li><a href="category.html">Health</a></li>
-                                                <li><a href="category.html">Harmful</a></li>
-                                                <li><a href="category.html">Technology</a></li>
-                                                <li><a href="category.html">Travel</a></li>
-                                                <li><a href="category.html">Food</a></li>
-                                                <li><a href="category.html">Creative</a></li>
-                                            </ul>
-                                        </nav>
-                                    </div>
                                 </div> 
                             </div>
                         </div>

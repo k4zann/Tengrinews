@@ -1,9 +1,10 @@
 package models
 
 type Article struct {
-	ID      int
-	Title   string
-	Content string
+	ID       int
+	Title    string
+	Content  string
+	Category string
 }
 
 type Post struct {
@@ -15,11 +16,16 @@ type Post struct {
 	Link        string   `json:"source_url"`
 }
 
-type PageData struct {
+type IndexPageData struct {
 	Categories  []string
-	Title       string
 	LatestPosts []Post
 	Articles    []Post
+}
+
+type CategoryPageData struct {
+	Categories []string
+	Category   string
+	Articles   []Post
 }
 
 type Result struct {
