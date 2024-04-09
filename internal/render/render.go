@@ -3,19 +3,13 @@ package render
 
 import (
 	"net/http"
-	"strings"
 	"tengrinews/internal/helpers"
 	"tengrinews/internal/models"
 	"text/template"
 )
 
 func RenderCategoryPage(w http.ResponseWriter, category string, result []models.Article) {
-	tmpl := template.Must(template.ParseFiles("ui/category.html")).Funcs(
-		template.FuncMap{
-			"lower": strings.ToLower,
-		},
-	)
-
+	tmpl := template.Must(template.New("category.html").Funcs(helpers.FuncsForTemplate).ParseFiles("ui/category.html"))
 	data := models.CategoryPageData{
 		Categories: helpers.Categories,
 		Category:   category,
@@ -26,14 +20,20 @@ func RenderCategoryPage(w http.ResponseWriter, category string, result []models.
 }
 
 func RenderIndexPage(w http.ResponseWriter, latestPosts []models.Article) {
-	tmpl := template.Must(template.ParseFiles("ui/index.html")).Funcs(
-		template.FuncMap{
-			"lower": strings.ToLower,
-		},
-	)
+	tmpl := template.Must(template.New("index.html").Funcs(helpers.FuncsForTemplate).ParseFiles("ui/index.html"))
 	data := models.IndexPageData{
 		Categories:  helpers.Categories,
 		LatestPosts: latestPosts,
+	}
+	tmpl.Execute(w, data)
+}
+
+func RenderPostDetailsPage(w http.ResponseWriter, post models.Article) {
+	tmpl := template.Must(template.New("post_details.html").Funcs(helpers.FuncsForTemplate).ParseFiles("ui/post_details.html"))
+
+	data := models.PostDetailesPageData{
+		Categories: helpers.Categories,
+		Post:       post,
 	}
 	tmpl.Execute(w, data)
 }

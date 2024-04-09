@@ -39,8 +39,9 @@ func FetchAllArticles(result *models.Result) error {
 	}
 }
 
-func FetchDataByID(result *models.Result, id string) error {
-	apiURL := fmt.Sprintf("%s?apiKey=%s&id=%s", helpers.APIURL, helpers.APIKey, id)
+func FetchDataByID(result *models.Article, id string) error {
+	apiURL := fmt.Sprintf("%s?apikey=%s&id=%s", helpers.APIURL, helpers.APIKey, id)
+	fmt.Println(apiURL)
 	resp, err := http.Get(apiURL)
 	if err != nil {
 		return fmt.Errorf("error fetching data for ID %s: %s", id, err.Error())
@@ -51,12 +52,12 @@ func FetchDataByID(result *models.Result, id string) error {
 		return fmt.Errorf("error fetching data for ID %s: received status code %d", id, resp.StatusCode)
 	}
 
-	var idResult models.Result
+	var idResult models.Article
 	if err := json.NewDecoder(resp.Body).Decode(&idResult); err != nil {
 		return fmt.Errorf("error decoding response for ID %s: %s", id, err.Error())
 	}
 
-	if len(idResult.Posts) == 0 {
+	if len(idResult.ID) == 0 {
 		return fmt.Errorf("no post found for ID %s", id)
 	}
 
@@ -75,8 +76,9 @@ func FetchDataByCategory(result *models.Result, cat string) error {
 	go func(cat string) {
 		defer wg.Done()
 
-		apiURL := fmt.Sprintf("%s?apiKey=%s&category=%s", helpers.APIURL, helpers.APIKey, cat)
+		apiURL := fmt.Sprintf("%s?apikey=%s&category=%s&%s", helpers.APIURL, helpers.APIKey, cat, helpers.APILang)
 		resp, err = http.Get(apiURL)
+		fmt.Println(apiURL)
 		if err != nil {
 			errMutex.Lock()
 			defer errMutex.Unlock()
@@ -106,7 +108,7 @@ func FetchDataByCategory(result *models.Result, cat string) error {
 }
 
 func FetchDataBySearch(result *models.Result, query string) error {
-	apiURL := fmt.Sprintf("%s?apiKey=%s&q=%s", helpers.APIURL, helpers.APIKey, url.QueryEscape(query))
+	apiURL := fmt.Sprintf("%s?apikey=%s&q=%s", helpers.APIURL, helpers.APIKey, url.QueryEscape(query))
 	resp, err := http.Get(apiURL)
 	if err != nil {
 		return fmt.Errorf("error fetching data for query %s: %s", query, err.Error())

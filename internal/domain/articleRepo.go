@@ -8,7 +8,7 @@ import (
 
 type ArticleRepository interface {
 	GetAll(result *models.Result) ([]models.Article, error)
-	GetByID(result *models.Result, id string) (*models.Article, error)
+	GetByID(result *models.Article, id string) (*models.Article, error)
 	GetByCategory(result *models.Result, category string) ([]models.Article, error)
 	GetBySearch(result *models.Result, search string) ([]models.Article, error)
 }
@@ -25,16 +25,16 @@ func (r *MockArticleRepository) GetAll(result *models.Result) ([]models.Article,
 	return result.Posts, nil
 }
 
-func (r *MockArticleRepository) GetByID(result *models.Result, id string) (*models.Article, error) {
+func (r *MockArticleRepository) GetByID(result *models.Article, id string) (*models.Article, error) {
 	if err := api.FetchDataByID(result, id); err != nil {
 		return nil, fmt.Errorf("error fetching article by ID %s: %s", id, err.Error())
 	}
 
-	if len(result.Posts) == 0 {
+	if result == nil {
 		return nil, fmt.Errorf("no article found for ID %s", id)
 	}
 
-	return &result.Posts[0], nil
+	return result, nil
 }
 
 func (r *MockArticleRepository) GetByCategory(result *models.Result, category string) ([]models.Article, error) {

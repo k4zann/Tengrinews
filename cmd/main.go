@@ -23,7 +23,7 @@ func main() {
 
 	r.HandleFunc("/", h.IndexHandler)
 	r.HandleFunc("/category/{category}", h.CategoryHandler)
-
+	r.HandleFunc("/post/{id}", h.PostDetailsHandler)
 	fs := http.FileServer(http.Dir("ui/assets/"))
 	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", fs))
 

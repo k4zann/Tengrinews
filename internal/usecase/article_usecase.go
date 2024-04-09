@@ -20,7 +20,7 @@ func (uc *ArticleUsecase) GetAllArticles(result *models.Result) ([]models.Articl
 	return uc.ArticleRepo.GetAll(result)
 }
 
-func (uc *ArticleUsecase) GetArticleByID(result *models.Result, id string) (*models.Article, error) {
+func (uc *ArticleUsecase) GetArticleByID(result *models.Article, id string) (*models.Article, error) {
 	return uc.ArticleRepo.GetByID(result, id)
 }
 

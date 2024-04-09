@@ -78,7 +78,7 @@
                                     <nav>            
                                         <ul id="navigation">    
                                             {{range .Categories}}                                    
-                                                <li><a href="/category/{{.}}">{{.}}</a></li>
+                                                <li><a href="/category/{{lower .}}">{{.}}</a></li>
                                             {{end}}
                                         </ul>
                                     </nav>
@@ -132,7 +132,7 @@
                                 </div>
                                 <div class="banner-cap2">
                                     <p>{{.Category}}</p>
-                                    <h3><a href="{{.Link}}">{{.Title}}</a></h3>
+                                    <h3><a href="/post/{{.ID}}">{{.Title}}</a></h3>
                                     <p class="blog-text" style="text-transform: normal !important;">{{.Description}}</p>
                                 </div>
                             </div>

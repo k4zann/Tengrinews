@@ -12,7 +12,7 @@ type Article struct {
 
 type IndexPageData struct {
 	Categories  []string
-	LatestPosts []Article // Corrected field name
+	LatestPosts []Article
 	Articles    []Article
 }
 
@@ -20,6 +20,11 @@ type CategoryPageData struct {
 	Categories []string
 	Category   string
 	Articles   []Article
+}
+
+type PostDetailesPageData struct {
+	Categories []string
+	Post       Article
 }
 
 type Result struct {
