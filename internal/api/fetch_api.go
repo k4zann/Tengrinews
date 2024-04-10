@@ -39,6 +39,43 @@ func FetchAllArticles(result *models.Result) error {
 	}
 }
 
+func FetchByID(result *models.Article, id string) error {
+	file, err := os.Open("sample.json")
+	if err != nil {
+		return fmt.Errorf("error opening file: %w", err)
+	}
+	defer file.Close()
+
+	decodingDone := make(chan struct{})
+
+	go func() {
+		defer close(decodingDone)
+		var posts models.Result
+		err := json.NewDecoder(file).Decode(&posts)
+		if err != nil {
+			panic(err)
+		}
+
+		for _, post := range posts.Posts {
+			if post.ID == id {
+				*result = post
+				helpers.CutImageData(post.Content)
+				return
+			}
+		}
+	}()
+
+	select {
+	case <-decodingDone:
+		fmt.Println("Decoding done")
+		return nil
+	case <-time.After(5 * time.Second):
+		fmt.Println("Decoding timeout")
+		return fmt.Errorf("decoding timeout")
+	}
+
+}
+
 func FetchDataByID(result *models.Article, id string) error {
 	apiURL := fmt.Sprintf("%s?apikey=%s&id=%s", helpers.APIURL, helpers.APIKey, id)
 	fmt.Println(apiURL)

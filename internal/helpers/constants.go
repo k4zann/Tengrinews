@@ -10,6 +10,7 @@ const (
 	APIURL         = "https://newsdata.io/api/1/news"
 	APILang        = "language=en,ru"
 	APIFullContent = "full_content=1"
+	MongoDB = ""
 )
 
 var Categories = []string{
@@ -21,3 +22,12 @@ var Categories = []string{
 var FuncsForTemplate = template.FuncMap{
 	"lower": strings.ToLower,
 }
+
+var FuncsForSafeHTML = template.FuncMap{
+	"safeHTML": func(content string) template.HTML {
+		return template.HTML(content)
+	},
+	"lower": strings.ToLower,
+}
+
+

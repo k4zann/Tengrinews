@@ -112,12 +112,12 @@
                         <div class="single-baner-nw2 mb-30">
                             <div class="banner-img-cap2">
                                 <div class="banner-img">
-                                    <img src="{{.ImageURL}}" alt="{{.Title}}">
+                                    <img src="{{.ImageURL}}" onerror="this.onerror=null; this.src='assets/img/tengrinews_image.jpeg';" alt="{{.Title}}">
                                 </div>
                                 <div class="banner-cap2">
-                                    <p>{{.Category}}</p>
+                                    <p>{{index .Category 0}}</p>
                                     <h3><a href="/post/{{.ID}}">{{.Title}}</a></h3>
-                                    <p class="blog-text" style="text-transform: normal !important;">{{.Description}}</p>
+                                    <!-- <p class="blog-text" style="text-transform: normal !important;">{{.Description}}</p> -->
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,29 @@
             </div>
         </div>
         <!-- Latest Posts End-->
-
+        <!--Pagination Start  -->
+        <div class="pagination-area text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="single-wrap d-flex justify-content-center">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-start " id="myDIV">
+                                    <li class="page-item"><a class="page-link" href=""><span class="ti-angle-left"></span></a></li>
+                                    {{if .HasPrevPage}}
+                                        <li class="page-item"><a class="page-link" href="?page={{.PrevPageNum}}">{{.PrevPageNum}}</a></li>
+                                    {{end}}
+                                    <li class="page-item active"><a class="page-link" href="/">{{.CurrentPageNum}}</a></li>
+                                    <li class="page-item"><a class="page-link" href="?page={{.NextPageNum}}">{{.NextPageNum}}</a></li>
+                                    <li class="page-item"><a class="page-link" href="?page={{.NextPageNum}}"><span class="ti-angle-right"></span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Pagination End  -->
     </main>
     
     <footer>

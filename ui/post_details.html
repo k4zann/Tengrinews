@@ -66,18 +66,18 @@
                             <div class="col-12">
                                 <!-- logo 2 -->
                                 <div class="logo2">
-                                    <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                    <a href="/"><img src="assets/img/logo/logo.png" alt=""></a>
                                 </div>
                                 <!-- logo 3 -->
                                 <div class="logo3 d-block d-sm-none">
-                                    <a href="index.html"><img src="assets/img/logo/logo-mobile.png" alt=""></a>
+                                    <a href="/"><img src="assets/img/logo/logo-mobile.png" alt=""></a>
                                 </div>
                                 <!-- Main-menu -->
                                 <div class="main-menu text-center d-none d-lg-block">
                                     <nav>                                                
                                         <ul id="navigation">                                                                                                                                     
                                             {{range .Categories}}
-                                                <li><a href="/category/{{.}}">{{.}}</a></li>
+                                                <li><a href="/category/{{lower .}}">{{.}}</a></li>
                                             {{end}}
                                         </ul>
                                     </nav>
@@ -102,8 +102,8 @@
                     <div class="col-lg-12">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">{{.Category}}</a></li> 
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">{{index .Post.Category 0}}</a></li> 
                                 <li class="breadcrumb-item"><a href="#">Post details</a></li> 
                             </ol>
                         </nav>
@@ -112,29 +112,40 @@
             </div>
         </div>
         <!-- breadcrumb End -->
-        <!-- Post Details Stat -->
+        <!-- Post Details Start -->
         <div class="post-details pb-80">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>{{.Post.Title}}</h2>
+                        <div class="details-img mb-40">
+                            <img class="img-fluid" src="{{ .Post.ImageURL }}" onerror="this.onerror=null; this.src='/assets/img/tengrinews_image.jpeg';" alt="{{ .Post.Title }}">
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="details-img mb-40">
-                            <img class="img-fluid" src="{{.Post.ImageURL}}" alt="">
+                    <div class="col-lg-8">
+                        <div class="about-details-cap">
+                            <h2>{{ .Post.Title }}</h2>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-10">
                         <div class="about-details-cap">
-                            <p class="mb-30">{{.Post.Description}}</p>
+                            <p class="mb-30">{{ .Post.Description }}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="about-details-cap">
+                            <p class="mb-50">{{ .Post.Content }}</p>
+                            <div class="details-img">
+                                <img class="img-fluid mb-15" src="{{ .Post.ImageURL }}" onerror="this.onerror=null; this.src='/assets/img/tengrinews_image.jpeg';" alt="{{ .Post.Title }}">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Post Details End -->
+
     </main>
     <footer>
         <!-- Footer Start-->

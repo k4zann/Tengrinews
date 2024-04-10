@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"tengrinews/internal/api"
 	"tengrinews/internal/models"
+
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type ArticleRepository interface {
@@ -15,6 +17,7 @@ type ArticleRepository interface {
 
 type MockArticleRepository struct {
 	Articles []models.Article
+	Client   *mongo.Client
 }
 
 func (r *MockArticleRepository) GetAll(result *models.Result) ([]models.Article, error) {
@@ -26,7 +29,7 @@ func (r *MockArticleRepository) GetAll(result *models.Result) ([]models.Article,
 }
 
 func (r *MockArticleRepository) GetByID(result *models.Article, id string) (*models.Article, error) {
-	if err := api.FetchDataByID(result, id); err != nil {
+	if err := api.FetchByID(result, id); err != nil {
 		return nil, fmt.Errorf("error fetching article by ID %s: %s", id, err.Error())
 	}
 
