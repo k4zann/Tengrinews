@@ -83,9 +83,7 @@ func (h *Handler) IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	totalArticlesCount := len(articles) // Assuming you have a method to get total articles count
-	totalPages := (totalArticlesCount + pageSize - 1) / pageSize
-
+	totalPages := 5
 	pageData := models.IndexPageData{
 		Categories:  helpers.Categories,
 		LatestPosts: articles,

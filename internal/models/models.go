@@ -20,12 +20,12 @@ type ArticleImages struct {
 type IndexPageData struct {
 	Categories  []string
 	LatestPosts []Article
-	CurrentPage int  // Current page number
-	TotalPages  int  // Total number of pages
-	HasNextPage bool // Whether there is a next page
-	HasPrevPage bool // Whether there is a previous page
-	NextPageNum int  // Next page number
-	PrevPageNum int  // Previous page number
+	CurrentPage int
+	TotalPages  int
+	HasNextPage bool
+	HasPrevPage bool
+	NextPageNum int
+	PrevPageNum int
 }
 
 type CategoryPageData struct {

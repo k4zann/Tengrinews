@@ -134,15 +134,12 @@
                     <div class="col-xl-12">
                         <div class="single-wrap d-flex justify-content-center">
                             <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-start " id="myDIV">
-                                    <li class="page-item"><a class="page-link" href=""><span class="ti-angle-left"></span></a></li>
-                                    {{if .HasPrevPage}}
-                                        <li class="page-item"><a class="page-link" href="?page={{.PrevPageNum}}">{{.PrevPageNum}}</a></li>
-                                    {{end}}
-                                    <li class="page-item active"><a class="page-link" href="/">{{.CurrentPageNum}}</a></li>
-                                    <li class="page-item"><a class="page-link" href="?page={{.NextPageNum}}">{{.NextPageNum}}</a></li>
-                                    <li class="page-item"><a class="page-link" href="?page={{.NextPageNum}}"><span class="ti-angle-right"></span></a></li>
-                                </ul>
+                                {{if .HasPrevPage}}
+                                    <a class="page-link" href="?page={{.PrevPageNum}}">Previous</a>
+                                {{end}}
+                                {{if .HasNextPage}}
+                                    <a class="page-link" href="?page={{.NextPageNum}}">Next</a>
+                                {{end}}
                             </nav>
                         </div>
                     </div>

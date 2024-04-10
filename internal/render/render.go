@@ -34,7 +34,6 @@ func RenderCategoryPage(w http.ResponseWriter, category string, result []models.
 
 func RenderIndexPage(w http.ResponseWriter, data models.IndexPageData) {
 	tmpl := templates["index.html"]
-	
 	tmpl.Execute(w, data)
 }
 
