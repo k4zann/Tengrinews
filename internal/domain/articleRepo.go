@@ -10,7 +10,7 @@ import (
 
 type ArticleRepository interface {
 	GetAll(result *models.Result) ([]models.Article, error)
-	GetByID(result *models.Article, id string) (*models.Article, error)
+	GetByID(result *models.Post, id string, collection *mongo.Collection) error
 	GetByCategory(result *models.Result, category string) ([]models.Article, error)
 	GetBySearch(result *models.Result, search string) ([]models.Article, error)
 }
@@ -28,16 +28,16 @@ func (r *MockArticleRepository) GetAll(result *models.Result) ([]models.Article,
 	return result.Posts, nil
 }
 
-func (r *MockArticleRepository) GetByID(result *models.Article, id string) (*models.Article, error) {
-	if err := api.FetchByID(result, id); err != nil {
-		return nil, fmt.Errorf("error fetching article by ID %s: %s", id, err.Error())
+func (r *MockArticleRepository) GetByID(result *models.Post, id string, collection *mongo.Collection) error {
+	if err := api.FetchByIDMongo(result, id, collection); err != nil {
+		return fmt.Errorf("error fetching article by ID %s: %s", id, err.Error())
 	}
 
 	if result == nil {
-		return nil, fmt.Errorf("no article found for ID %s", id)
+		return fmt.Errorf("no article found for ID %s", id)
 	}
 
-	return result, nil
+	return nil
 }
 
 func (r *MockArticleRepository) GetByCategory(result *models.Result, category string) ([]models.Article, error) {

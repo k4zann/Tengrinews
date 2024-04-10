@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"strconv"
 	"tengrinews/internal/helpers"
@@ -22,7 +23,7 @@ type Handler struct {
 
 var categoryCache = make(map[string]models.Result)
 
-func (h *Handler) Pagination(page, pageSize int) ([]models.Article, error) {
+func (h *Handler) Pagination(page, pageSize int) ([]models.Post, error) {
 	skip := (page - 1) * pageSize
 
 	collection, err := h.ArticleUseCase.GetCollection()
@@ -37,27 +38,27 @@ func (h *Handler) Pagination(page, pageSize int) ([]models.Article, error) {
 	opts.SetAllowDiskUse(true)
 
 	cursor, err := collection.Aggregate(ctx, mongo.Pipeline{
-		{{"$unwind", "$articles"}},
-		{{"$project", bson.D{
-			{"article_id", "$articles.article_id"},
-			{"title", "$articles.title"},
-			{"description", "$articles.description"},
-			{"content", "$articles.content"},
-			{"category", "$articles.category"},
-			{"image_url", "$articles.image_url "},
-			{"source_url", "$articles.link"},
+		{{Key: "$unwind", Value: "$articles"}},
+		{{Key: "$project", Value: bson.D{
+			{Key: "article_id", Value: "$articles.article_id"},
+			{Key: "title", Value: "$articles.title"},
+			{Key: "description", Value: "$articles.description"},
+			{Key: "content", Value: "$articles.content"},
+			{Key: "category", Value: "$articles.category"},
+			{Key: "image_url", Value: "$articles.image_url"},
+			{Key: "source_url", Value: "$articles.link"},
 		}}},
-		{{"$skip", int64(skip)}},      // Skip records based on page number
-		{{"$limit", int64(pageSize)}}, // Limit records per page
+		{{Key: "$skip", Value: int64(skip)}},
+		{{Key: "$limit", Value: int64(pageSize)}},
 	}, opts)
 	if err != nil {
 		return nil, err
 	}
 	defer cursor.Close(ctx)
 
-	var articles []models.Article
+	var articles []models.Post
 	for cursor.Next(ctx) {
-		var article models.Article
+		var article models.Post
 		if err := cursor.Decode(&article); err != nil {
 			return nil, err
 		}
@@ -149,17 +150,14 @@ func (h *Handler) PostDetailsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := models.Article{}
-
-	post, err := h.ArticleUseCase.GetArticleByID(&result, id)
+	post, err := h.ArticleUseCase.GetArticleByID(id)
 	if err != nil {
-		if err.Error() == "not found" {
+		if errors.Is(err, mongo.ErrNoDocuments) {
 			http.Error(w, "Post not found", http.StatusNotFound)
 		} else {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 		return
 	}
-
 	render.RenderPostDetailsPage(w, *post)
 }

@@ -37,7 +37,7 @@ func RenderIndexPage(w http.ResponseWriter, data models.IndexPageData) {
 	tmpl.Execute(w, data)
 }
 
-func RenderPostDetailsPage(w http.ResponseWriter, post models.Article) {
+func RenderPostDetailsPage(w http.ResponseWriter, post models.Post) {
 	tmpl := templates["post_details.html"]
 
 	data := models.PostDetailesPageData{

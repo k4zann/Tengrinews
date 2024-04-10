@@ -14,7 +14,8 @@ import (
 )
 
 var (
-	client *mongo.Client
+	client     *mongo.Client
+	collection *mongo.Collection
 )
 
 func main() {
@@ -24,7 +25,7 @@ func main() {
 
 	repo := &domain.MockArticleRepository{}
 
-	uc := usecase.NewArticleUsecase(repo, client)
+	uc := usecase.NewArticleUsecase(repo, client, collection)
 
 	h := &handler.Handler{
 		ArticleUseCase: *uc,
@@ -54,6 +55,6 @@ func initMongoDB() {
 	if err != nil {
 		log.Fatal("Error pinging MongoDB:", err)
 	}
-
+	collection = client.Database("news").Collection("articles")
 	log.Println("Connected to MongoDB successfully")
 }

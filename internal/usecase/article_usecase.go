@@ -3,7 +3,6 @@ package usecase
 
 import (
 	"errors"
-	"fmt"
 	"tengrinews/internal/domain"
 	"tengrinews/internal/models"
 
@@ -13,12 +12,14 @@ import (
 type ArticleUsecase struct {
 	ArticleRepo domain.ArticleRepository
 	Client      *mongo.Client
+	Collection  *mongo.Collection
 }
 
-func NewArticleUsecase(repo domain.ArticleRepository, client *mongo.Client) *ArticleUsecase {
+func NewArticleUsecase(repo domain.ArticleRepository, client *mongo.Client, collection *mongo.Collection) *ArticleUsecase {
 	return &ArticleUsecase{
 		ArticleRepo: repo,
 		Client:      client,
+		Collection:  collection,
 	}
 }
 
@@ -26,8 +27,19 @@ func (uc *ArticleUsecase) GetAllArticles(result *models.Result) ([]models.Articl
 	return uc.ArticleRepo.GetAll(result)
 }
 
-func (uc *ArticleUsecase) GetArticleByID(result *models.Article, id string) (*models.Article, error) {
-	return uc.ArticleRepo.GetByID(result, id)
+func (uc *ArticleUsecase) GetArticleByID(id string) (*models.Post, error) {
+	collection, err := uc.GetCollection()
+	if err != nil {
+		return nil, err
+	}
+
+	article := &models.Post{}
+	err = uc.ArticleRepo.GetByID(article, id, collection)
+	if err != nil {
+		return nil, err
+	}
+
+	return article, nil
 }
 
 func (uc *ArticleUsecase) GetArticlesByCategory(result *models.Result, category string) ([]models.Article, error) {
@@ -43,7 +55,5 @@ func (uc *ArticleUsecase) GetCollection() (*mongo.Collection, error) {
 		return nil, errors.New("MongoDB client is not initialized")
 	}
 
-	collection := uc.Client.Database("news").Collection("articles")
-	fmt.Println(collection)
-	return collection, nil
+	return uc.Collection, nil
 }

@@ -1,4 +1,3 @@
-// models/article.go
 package models
 
 type Article struct {
@@ -11,6 +10,18 @@ type Article struct {
 	Link        string   `json:"source_url"`
 }
 
+type Post struct {
+	ID          string   `bson:"article_id"`
+	Title       string   `bson:"title"`
+	Description string   `bson:"description"`
+	Content     string   `bson:"content"`
+	Category    []string `bson:"category"`
+	ImageURL    string   `bson:"image_url"`
+	Link        string   `bson:"source_url"`
+	PubDate     string   `bson:"pubDate"`
+	Creator     []string `bson:"creator"`
+}
+
 type ArticleImages struct {
 	Context string `json:"@context"`
 	Type    string `json:"@type"`
@@ -19,7 +30,7 @@ type ArticleImages struct {
 
 type IndexPageData struct {
 	Categories  []string
-	LatestPosts []Article
+	LatestPosts []Post
 	CurrentPage int
 	TotalPages  int
 	HasNextPage bool
@@ -36,9 +47,13 @@ type CategoryPageData struct {
 
 type PostDetailesPageData struct {
 	Categories []string
-	Post       Article
+	Post       Post
 }
 
 type Result struct {
 	Posts []Article `json:"results"`
+}
+
+type ResultMongo struct {
+	Posts []Post `bson:"articles"`
 }

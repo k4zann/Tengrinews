@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -10,6 +11,9 @@ import (
 	"tengrinews/internal/helpers"
 	"tengrinews/internal/models"
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func FetchAllArticles(result *models.Result) error {
@@ -39,7 +43,7 @@ func FetchAllArticles(result *models.Result) error {
 	}
 }
 
-func FetchByID(result *models.Article, id string) error {
+func FetchByID(result *models.Article, id string, collection *mongo.Collection) error {
 	file, err := os.Open("sample.json")
 	if err != nil {
 		return fmt.Errorf("error opening file: %w", err)
@@ -101,6 +105,55 @@ func FetchDataByID(result *models.Article, id string) error {
 	*result = idResult
 
 	return nil
+}
+
+func FetchByIDMongo(result *models.Post, id string, collection *mongo.Collection) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	cursor, err := collection.Find(ctx, bson.M{})
+	if err != nil {
+		return fmt.Errorf("error fetching documents: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	type FetchResult struct {
+		post models.ResultMongo
+		err  error
+	}
+
+	results := make(chan FetchResult)
+
+	go func() {
+		defer close(results)
+		for cursor.Next(ctx) {
+			var post models.ResultMongo
+			if err := cursor.Decode(&post); err != nil {
+				results <- FetchResult{err: fmt.Errorf("error decoding document: %w", err)}
+				return
+			}
+			results <- FetchResult{post: post}
+		}
+	}()
+
+	for res := range results {
+		if res.err != nil {
+			return res.err
+		}
+		for _, article := range res.post.Posts {
+			if article.ID == id {
+				*result = article
+				helpers.CutImageData(article.Content)
+				return nil
+			}
+		}
+	}
+
+	if err := cursor.Err(); err != nil {
+		return fmt.Errorf("cursor error: %w", err)
+	}
+
+	return fmt.Errorf("post not found for ID: %s", id)
 }
 
 func FetchDataByCategory(result *models.Result, cat string) error {
