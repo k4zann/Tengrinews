@@ -17,7 +17,7 @@ Tengrinews is a web application that displays news articles fetched from an exte
 
 
 ## Setup
-1. Clone the repository: `git clone https://github.com/yourusername/tengrinews.git`
+1. Clone the repository: `https://github.com/k4zann/Tengrinews.git`
 2. Run the code: `go run cmd/main.go`
 
 ## Usage
