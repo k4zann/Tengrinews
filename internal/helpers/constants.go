@@ -2,15 +2,19 @@ package helpers
 
 import (
 	"html/template"
+	"os"
 	"strings"
 )
 
 const (
-	APIKey     = "pub_4152413e257988a1239359e23c019ac57c79e"
-	APIURL     = "https://newsdata.io/api/1/news"
-	APILang    = "language=en,ru"
-	MongoDBUri = "mongodb+srv://arshataitkozha:010arshat@tengrinews.t5rzs40.mongodb.net/?retryWrites=true&w=majority&appName=Tengrinews"
-	PORT       = ":8080"
+	APIURL  = "https://newsdata.io/api/1/news"
+	APILang = "language=en,ru"
+	PORT    = ":8080"
+)
+
+var (
+	APIKey     = os.Getenv("NEWSDATA_API_KEY")
+	MongoDBUri = os.Getenv("MONGODB_URI")
 )
 
 var Categories = []string{

@@ -32,10 +32,3 @@ func InitMongoDB() (*mongo.Client, *mongo.Collection, error) {
 	log.Println("Connected to MongoDB successfully")
 	return client, collection, nil
 }
-
-// func LoadEnv() {
-// 	err := godotenv.Load(".env")
-// 	if err != nil {
-// 		log.Fatal("Error loading .env file")
-// 	}
-// }

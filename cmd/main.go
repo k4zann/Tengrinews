@@ -14,7 +14,9 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	// helpers.LoadEnv()
+	if helpers.APIKey == "" || helpers.MongoDBUri == "" {
+		log.Fatal("NEWSDATA_API_KEY and MONGODB_URI must be set")
+	}
 	client, collection, err := helpers.InitMongoDB()
 	if err != nil {
 		log.Fatal("Error initializing MongoDB:", err)
