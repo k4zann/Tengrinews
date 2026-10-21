@@ -1,0 +1,52 @@
+{{define "main" -}}
+        <!-- Latest Posts Area -->
+        <div class="latest-posts pt-80 pb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-tittle mb-35">
+                            <h2>Posts</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {{range .LatestPosts}}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-baner-nw2 mb-30">
+                            <div class="banner-img-cap2">
+                                <div class="banner-img">
+                                    <img src="{{.ImageURL}}" onerror="this.onerror=null; this.src='/assets/img/tengrinews_image.jpeg';" alt="{{.Title}}">
+                                </div>
+                                <div class="banner-cap2">
+                                    <p>{{with .Category}}{{index . 0}}{{end}}</p>
+                                    <h3><a href="/post/{{.ID}}">{{.Title}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+        <!-- Latest Posts End-->
+        <!--Pagination Start  -->
+        <div class="pagination-area text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="single-wrap d-flex justify-content-center">
+                            <nav aria-label="Page navigation example">
+                                {{if .HasPrevPage}}
+                                    <a class="page-link" href="?page={{.PrevPageNum}}"><strong>Previous</strong></a>
+                                {{end}}
+                                {{if .HasNextPage}}
+                                    <a class="page-link" href="?page={{.NextPageNum}}"><strong>Next</strong></a>
+                                {{end}}
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Pagination End  -->
+{{- end}}

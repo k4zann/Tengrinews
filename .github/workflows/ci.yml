@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TEST_MONGODB_URI: mongodb://localhost:27017
+    services:
+      mongodb:
+        image: mongo:8.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.runCommand({ping:1})'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      # Third-party actions are pinned to a full commit SHA; the comment names the release.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # The latest stable Go, not go.mod's 1.26.0: govulncheck judges the stdlib of the toolchain it runs on.
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: stable
+          check-latest: true
+
+      - name: gofmt
+        run: |
+          unformatted="$(gofmt -l .)"
+          if [ -n "$unformatted" ]; then
+            echo "These files need gofmt:"
+            echo "$unformatted"
+            exit 1
+          fi
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: go test -race
+        run: go test -race ./...
+
+      # The Mongo integration test skips when TEST_MONGODB_URI is unset, so prove it ran and passed.
+      - name: Mongo integration test ran, not skipped
+        run: |
+          set -o pipefail
+          go test -race -count=1 -v -run Integration ./internal/mongostore | tee integration.log
+          for name in TestIntegrationReadsSeededCollection TestIntegrationCountEmptyCollection; do
+            grep -Eq "^--- PASS: $name " integration.log || { echo "$name did not pass"; exit 1; }
+          done
+          if grep -Fq -e '--- SKIP' integration.log; then
+            echo "an integration test was skipped"
+            exit 1
+          fi
+
+      - name: govulncheck
+        run: go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...
