@@ -18,7 +18,8 @@ Tengrinews is a web application that displays news articles fetched from an exte
 
 ## Setup
 1. Clone the repository: `https://github.com/k4zann/Tengrinews.git`
-2. Run the code: `go run cmd/main.go`
+2. Set the environment variables `NEWSDATA_API_KEY` (your newsdata.io key) and `MONGODB_URI` (your MongoDB connection string)
+3. Run the code: `go run cmd/main.go`
 
 ## Usage
 - Access the web application in your browser at `http://localhost:8080`
