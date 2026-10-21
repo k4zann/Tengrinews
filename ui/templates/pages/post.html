@@ -1,0 +1,63 @@
+{{define "main" -}}
+        <!-- breadcrumb Start-->
+        <div class="page-notification">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">{{with .Post.Category}}{{index . 0}}{{end}}</a></li> 
+                                <li class="breadcrumb-item"><a href="#">Post details</a></li> 
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- breadcrumb End -->
+        <!-- Post Details Start -->
+        <div class="post-details pb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="about-details-cap">
+                            <h2>{{ .Post.Title }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul>
+                            <li><strong>Published Date:</strong> {{ .Post.PubDate }}</li>
+                            {{ if ne (len .Post.Creator) 0 }}
+                                <li><strong>Creator:</strong> {{ index .Post.Creator 0 }}</li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="details-img mb-40">
+                            <img class="img-fluid" src="{{ .Post.ImageURL }}" onerror="this.onerror=null; this.src='/assets/img/tengrinews_image.jpeg';" alt="{{ .Post.Title }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-10">
+                        <div class="about-details-cap">
+                            <p class="mb-30">{{ .Post.Description }}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="about-details-cap">
+                            <p class="mb-50">{{ .Post.Content }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Post Details End -->
+
+{{- end}}
